@@ -1,8 +1,12 @@
+if (!require(tidyverse)) install.packages('tidyverse')
 library(tidyverse)
+if (!require(ggplot2)) install.packages('ggplot2')
 library(ggplot2)
+if (!require(gridExtra)) install.packages('gridExtra')
 library(gridExtra)
 
-ans1_probs <- read_tsv("ancestry-probs-par1_transposed_allchrs.tsv")
+
+ans1_probs <- read_tsv("AHMM/output/ancestry-probs-par1_transposed_allchrs.tsv")
 
 plot_list <- list()
 
@@ -49,7 +53,7 @@ ggplot(ans1_probs_mean, aes(x = bp, y = mean_prob, group = 1)) +
 
 
 
-ans2_probs <- read_tsv("ancestry-probs-par2_transposed_allchrs.tsv")
+ans2_probs <- read_tsv("AHMM/output/ancestry-probs-par2_transposed_allchrs.tsv")
 
 plot_list <- list()
 

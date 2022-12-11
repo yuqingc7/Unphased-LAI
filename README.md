@@ -17,22 +17,27 @@ cd /workdir/$NETID
 git clone https://github.com/yuqingc7/Unphased-LAI
 ls Unphased-LAI # check if all files are there
 
-### load the image from tar file
-cd Unphased-LAI
-docker1 load -i lai_unphased.tar
+### load the image from docker hub
+docker1 pull yuqingchen/unphased-lai:latest
+#Digest: sha256:0ca6b17e6f3c9d304108bda99b1a71925409c3aab3607857f13d97d787979f77
+#Status: Downloaded newer image for yuqingchen/unphased-lai:latest
+#docker.io/yuqingchen/unphased-lai:latest
+
+### check if docker image loaded
+docker1 images
+#REPOSITORY                              TAG                              IMAGE ID       CREATED        SIZE
+#yuqingchen/unphased-lai                 latest                           d275714c1264   15 hours ago   2.31GB
 ```
+
 Your working directory will be `/workdir/$NETID/Unphased-LAI` (outside the docker container), which will be mounted as `/workdir/Unphased-LAI` inside the docker container. 
 
-Refer to "docker_image_set_up.md" to learn how the tar file was made. 
+Refer to "docker_image_set_up.md" to learn how the docker image was made. 
 
 ## Simulate admixed genomes using mixnmatch (need to be run inside the docker interactively)
 ```
-### load the image from tar file
-docker1 load -i lai_unphased.tar
-
 ### start a Docker container from the image
 NETID=yc2644 # update this to your netid
-docker1 run -dit biohpc_$NETID/lai_unphased 
+docker1 run -dit yuqingchen/unphased-lai 
 docker1 ps -a
 
 ### run the Docker container

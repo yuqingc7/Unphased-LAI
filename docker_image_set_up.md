@@ -1,6 +1,6 @@
 # How the Docker image was set up for this project
 
-## Already done for you, the Docker image can be loaded from the tar file "lai_unphased.tar")
+## Already done for you, the Docker image can be loaded from docker hub "yuqingchen/unphased-lai")
 
 ```
 ### pull the image from DockerHub
@@ -22,16 +22,14 @@ apt-get install snp-sites
 ### modify the perl script "simulate_admixed_genomes_v6.pl"
 ## IMPORTANT; by default, the program will delete intermediate haplotype files that we need for ELAI) ##
 cd /mixnmatch_ancestryinfer_docker/mixnmatch
-# vim open "simulate_admixed_genomes_v6.pl", comment out line 561 `#print CLEANUP "rm macs_simulation_results_trees*"."\n";` 
+# vim open "simulate_admixed_genomes_v6.pl", comment out line 560 `#print CLEANUP "rm macs_simulation_results_trees*"."\n";` 
 
 ### modify the perl script "generate_genomes_and_reads_v3.pl"
 ## IMPORTANT; to solve the problem of gzip keeps prompting for overlapped files especially when re-running ##
-cd /mixnmatch_ancestryinfer_docker/mixnmatch
 # vim open "generate_genomes_and_reads_v3.pl", add "-f" to line 113 after "gzip" so that it writes `system("gzip -f $r1 $r2")";` 
 
 ### modify the perl script "post_hmm_accuracy_shell.pl"
 ## IMPORTANT; to keep the hard call files based on ahmm results ##
-cd /mixnmatch_ancestryinfer_docker/mixnmatch
 # vim open "post_hmm_accuracy_shell.pl", comment out line 34 `system("rm accuracy_indiv*");` 
 
 ### add bash command files to corresponding folders
@@ -41,9 +39,19 @@ cp /workdir/Unphased-LAI/bash_command_for_ahmm.sh /mixnmatch_ancestryinfer_docke
 ### exit and commit the container to a new Docker image
 # type exit
 docker1 stop $CID
-docker1 commit $CID lai_unphased # saved as biohpc_$NETID/lai_unphased
+docker1 commit $CID unphased_lai # saved as biohpc_$NETID/unphased_lai
 
 ### save your image to a tar file
 NETID=yc2644 # update this to your netid
-docker1 save -o lai_unphased.tar biohpc_$NETID/lai_unphased
+docker1 save -o biohpc_$NETID/unphased_lai nphased_lai.tar.gz
+# or docker1 save biohpc_$NETID/unphased_lai | gzip > unphased_lai.tar.gz
+
+### download the tar file to local machine
+## load the image from tar file
+docker load -i unphased_lai.tar
+## tag private images with newly created Docker ID
+docker tag biohpc_yc2644/unphased_lai yuqingchen/unphased-lai
+## push the image to docker hub
+docker push yuqingchen/unphased-lai
+# latest: digest: sha256:0ca6b17e6f3c9d304108bda99b1a71925409c3aab3607857f13d97d787979f77 size: 6419
 ```

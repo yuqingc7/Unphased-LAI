@@ -1,4 +1,4 @@
-setwd("/local/workdir/$NETID/Unphased-LAI/ELAI/output/")
+setwd("/local/workdir/yc2644/Unphased-LAI/ELAI/output/")
 
 if (!require(magrittr)) install.packages('magrittr')
 library(magrittr)
@@ -13,7 +13,7 @@ library(reshape2)
 
 mean_replicate <- function(prefix, mg){
   
-  PATH = ("/local/workdir/$NETID/Unphased-LAI/ELAI/output/")
+  PATH = ("/local/workdir/yc2644/Unphased-LAI/ELAI/output/")
   file_list = list.files(path=PATH, 
                        pattern=paste0(prefix, ".numgen", mg, ".replicate*[0-9]*.ps21.txt"))
   print(file_list)
@@ -32,13 +32,13 @@ mean_replicate <- function(prefix, mg){
   res_mean_cell<-dcast(result,  Var1 ~ Var2, value.var = "cell_mean")
   res_mean_cell[1] <- NULL  # remove individuals 
   
-  filename <- paste0("/local/workdir/$NETID/Unphased-LAI/ELAI/output/sum/", prefix,".numgen", mg, "_Mean_Replicates.ps21.txt")
+  filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix, ".numgen", mg, "_Mean_Replicates.ps21.txt")
   write.table(res_mean_cell, filename, quote = FALSE, col.names=FALSE,row.names=FALSE,sep="\t")
 }
 
 sd_replicate <- function(prefix, mg){
   
-  PATH = ("/local/workdir/$NETID/Unphased-LAI/ELAI/output/")
+  PATH = ("/local/workdir/yc2644/Unphased-LAI/ELAI/output/")
   file_list = list.files(path=PATH, 
                          pattern=paste0(prefix, ".numgen", mg, ".replicate*[0-9]*.ps21.txt"))
   print(file_list)
@@ -57,7 +57,7 @@ sd_replicate <- function(prefix, mg){
   res_sd_cell<-dcast(result,  Var1 ~ Var2, value.var = "cell_sd")
   res_sd_cell[1] <- NULL  # remove individuals 
   
-  filename <- paste0("/local/workdir/$NETID/Unphased-LAI/ELAI/output/sum/", prefix ,".numgen", mg, "_SD_Replicates.ps21.txt")
+  filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix ,".numgen", mg, "_SD_Replicates.ps21.txt")
   write.table(res_sd_cell, filename, quote = FALSE, col.names=FALSE,row.names=FALSE,sep="\t")
 }
 

@@ -29,6 +29,11 @@ cd /mixnmatch_ancestryinfer_docker/mixnmatch
 cd /mixnmatch_ancestryinfer_docker/mixnmatch
 # vim open "generate_genomes_and_reads_v3.pl", add "-f" to line 113 after "gzip" so that it writes `system("gzip -f $r1 $r2")";` 
 
+### modify the perl script "post_hmm_accuracy_shell.pl"
+## IMPORTANT; to keep the hard call files based on ahmm results ##
+cd /mixnmatch_ancestryinfer_docker/mixnmatch
+# vim open "post_hmm_accuracy_shell.pl", comment out line 34 `system("rm accuracy_indiv*");` 
+
 ### add bash command files to corresponding folders
 cp /workdir/Unphased-LAI/bash_command_for_mixnmatch.sh /mixnmatch_ancestryinfer_docker/mixnmatch
 cp /workdir/Unphased-LAI/bash_command_for_ahmm.sh /mixnmatch_ancestryinfer_docker/ancestryinfer

@@ -69,6 +69,8 @@ bash bash_command_for_ahmm.sh ahmm_configuration_file.cfg /workdir/Unphased-LAI/
 cd /mixnmatch_ancestryinfer_docker/mixnmatch
 # usage: perl post_hmm_accuracy_shell.pl ancestry-probs-par1_file ancestry-probs_par2_file path_to_simulation_reads_folder posterior_thresh path_to_simulator_install
 perl post_hmm_accuracy_shell.pl /mixnmatch_ancestryinfer_docker/ancestryinfer/ancestry-probs-par1_allchrs.tsv /mixnmatch_ancestryinfer_docker/ancestryinfer/ancestry-probs-par2_allchrs.tsv simulated_hybrids_reads_gen50_prop_par1_0.5 0.9 /mixnmatch_ancestryinfer_docker/mixnmatch
+cp results_summary_simulated_hybrids* /workdir/Unphased-LAI/AHMM
+cp accuracy_indiv*_transposed /workdir/Unphased-LAI/AHMM
 ```
 
 ## Perform ELAI on simulated admixed genomes 
@@ -108,9 +110,23 @@ R 03_sum_per_pop.R &> 03_sum_per_pop.log &
 # Evaluation & Comparison
 You can run R on the Cornell biohpc server. Check out https://biohpc.cornell.edu/lab/userguide.aspx?a=software&i=266 on how to use Rstudio Server (without docker) on a Cornell biohpc server. Briefly, run the command "/programs/rstudio_server/rstudio_start" to start RStudio server. From a browser on your laptop/desktop computer, go to this site "http://cbsuxxxxxx.biohpc.cornell.edu:8015". (replacing the "cbsuxxxxx" with the acutal machine name). Log in with your BioHPC username and password.
 
-Another way, what I did is downloading the sum files to my local machine into a directory `results_summary_plots/data`, running Rstudio using the R scripts in the folder `results_summary_plots`, and producing plots in `results_summary_plots/plots`. 
+Another way, what I did is downloading the sum files to my local machine (I used FileZilla) into a directory `results_summary_plots/data`, running Rstudio using the R scripts in the folder `results_summary_plots`, and producing plots in `results_summary_plots/plots`. 
 
 In this repo, the folder `results_summary_plots/data` hosts the plots and sresults in my final project report. 
+
+- True
+  - "*.bed": true ancestry bed files for individuals 1-50
+- ELAI
+  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_all.txt" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_all.txt" (ELAI): ancestry dosage for every individual (n=50)
+  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_per_pop" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_per_pop" (ELAI): ancestry dosage for ancestry 1 & 2 averaged across 50 individuals in admixed population
+    - for *ans_ds1, 2: homozygous ancestry 1; 1: heterozygous; 0: homozygous ancestry 2
+    - for *ans_ds2, 2: homozygous ancestry 2; 1: heterozygous; 0: homozygous ancestry 1
+- AHMM
+  - "ancestry-probs-par1_transposed_allchrs.tsv" & "ancestry-probs-par2_transposed_allchrs.tsv" (AHMM): posterior probability of acestry 1 & 2 for each individual
+  - "accuracy_indiv*_genotypes_file_transposed": ancestry state called based on posterior probability 
+    - 2: homozygous ancestry 2; 1: heterozygous; 0: homozygous ancestry 1
+- "results_summary_simulated_hybrids_reads_gen50_prop_par1_0.5": 
+  - columns represent indiv,start,stop,counts_het,counts_par1,counts_par2,true_ancestry,accurate_counts,inaccurate_counts,mean posterior probability (for AHMM)
 
 
 ## References

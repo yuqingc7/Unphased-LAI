@@ -1,4 +1,4 @@
-setwd("/local/workdir/yc2644/AHMM_ELAI_comparison/ELAI_test/sum")
+setwd("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/")
 
 # this script is to average across individuals within every population
 # should be run after 02_sum_across_replicates.R
@@ -17,26 +17,34 @@ ds <- read_tsv(paste0(prefix ,".numgen", mg, "_Mean_Replicates.ps21.txt"), col_n
 
 # extract odd and even data (ancestry dosage from two source populations)
 odd_cols <- seq_len(ncol(ds)) %% 2
-ds_odd <- ds[, odd_cols == 1] # A tibble: 89 × 983
-ds_even <- ds[, odd_cols == 0] # A tibble: 89 × 983
+ancestry_ds1_all <- ds[, odd_cols == 1] # odd columns, par 1
+ancestry_ds2_all <- ds[, odd_cols == 0] # odd columns, par 2
 
 # average across individuals
-ancestry_ds1 <- colMeans(ds_odd) # native
-ancestry_ds2 <- colMeans(ds_even) # aquaculture
+ancestry_ds1 <- colMeans(ancestry_ds1_all) # par1
+ancestry_ds2 <- colMeans(ancestry_ds2_all) # par2
 
 # extract snp positions
-snpinfo <- read_tsv(paste0("/local/workdir/yc2644/AHMM_ELAI_comparison/ELAI_test/output/", prefix ,".numgen", mg,".replicate01.snpinfo.txt"), col_names=T)[,2]
+snpinfo <- read_tsv(paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/output/", prefix ,".numgen", mg,".replicate01.snpinfo.txt"), col_names=T)[,2]
+
+snpinfo_ancestry_ds1_all <- data.frame(snpinfo, t(ancestry_ds1_all))
+row.names(snpinfo_ancestry_ds1_all) <- NULL
+filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds1_all.txt")
+write_tsv(snpinfo_ancestry_ds1_all, filename)
+
+snpinfo_ancestry_ds2_all <- data.frame(snpinfo, t(ancestry_ds2_all))
+row.names(snpinfo_ancestry_ds2_all) <- NULL
+filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds2_all.txt")
+write_tsv(snpinfo_ancestry_ds2_all, filename)
 
 snpinfo_ancestry_ds1 <- data.frame(snpinfo, ancestry_ds1)
 row.names(snpinfo_ancestry_ds1) <- NULL
-
-filename <- paste0("/local/workdir/yc2644/AHMM_ELAI_comparison/ELAI_test/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds1.txt")
+filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds1_per_pop.txt")
 write_tsv(snpinfo_ancestry_ds1, filename)
 
 snpinfo_ancestry_ds2 <- data.frame(snpinfo, ancestry_ds2)
 row.names(snpinfo_ancestry_ds2) <- NULL
-
-filename <- paste0("/local/workdir/yc2644/AHMM_ELAI_comparison/ELAI_test/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds2.txt")
+filename <- paste0("/local/workdir/yc2644/Unphased-LAI/ELAI/sum/", prefix ,".numgen", mg, "_Mean_Replicates.ans_ds2_per_pop.txt")
 write_tsv(snpinfo_ancestry_ds2, filename)
   
 # clean up R memory

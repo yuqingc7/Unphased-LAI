@@ -117,7 +117,7 @@ You can run R on the Cornell biohpc server. Check out https://biohpc.cornell.edu
 
 Another way, what I did is downloading the sum files to my local machine (I used FileZilla) into a directory `results_summary_plots/data`, running Rstudio using the R scripts in the folder `results_summary_plots`, and producing plots in `results_summary_plots/plots`. 
 
-In this repo, the folder `results_summary_plots/data` hosts the plots and sresults in my final project report. 
+In this repo, the folder `results_summary_plots/data` hosts the example outputs from my final project report under basic simulation configuration. 
 
 - True
   - "*.bed": true ancestry bed files for individuals 1-50
@@ -137,10 +137,16 @@ In this repo, the folder `results_summary_plots/data` hosts the plots and sresul
 
 ## References
 https://github.com/Schumerlab/mixnmatch
+
 https://github.com/gchen98/macs 
+
 https://github.com/Schumerlab/ancestryinfer 
-https://github.com/haplotype/ELAI
+
+https://github.com/haplotype/ELAI 
+
 https://github.com/mleitwein/local_ancestry_inference_with_ELAI
+
 https://github.com/sanger-pathogens/snp-sites
+
 https://github.com/IARCbioinfo/VCF-tricks
 

@@ -51,7 +51,6 @@ cd /mixnmatch_ancestryinfer_docker/mixnmatch
 
 ## bash_command_for_mixnmatch.sh usage: bash bash_command_for_mixnmatch.sh configuration_file.cfg working_directory (local)
 bash bash_command_for_mixnmatch.sh hybrid_simulation_configuration.cfg /workdir/Unphased-LAI/mixnmatch_simulation
-# test command: bash bash_command_for_mixnmatch.sh hybrid_simulation_configuration_file.cfg /workdir/AHMM_ELAI_comparison/test_mixnmatch
 
 ## if prompted with "gzip: simulated_hybrids_reads_gen50_prop_par1_0.5/indiv1_read*.fq.gz already exists; do you wish to overwrite (y or n)?" - (this should not appear after I fixed the mixnmatch perl script)
 ## all enter "y" 
@@ -68,14 +67,6 @@ mkdir /workdir/Unphased-LAI/AHMM/output
 ## bash_command_for_ahmm.sh usage: bash bash_command_for_ahmm.sh configuration_file.cfg working_directory (local)
 bash bash_command_for_ahmm.sh ahmm_configuration_file.cfg /workdir/Unphased-LAI/AHMM
 # warning message can be ignored
-# test command: bash bash_command_for_ahmm.sh ahmm_configuration_file.cfg /workdir/AHMM_ELAI_comparison/test_ahmm
-
-### run accuracy test that comes with the pipeline
-cd /mixnmatch_ancestryinfer_docker/mixnmatch
-# usage: perl post_hmm_accuracy_shell.pl ancestry-probs-par1_file ancestry-probs_par2_file path_to_simulation_reads_folder posterior_thresh path_to_simulator_install
-perl post_hmm_accuracy_shell.pl /mixnmatch_ancestryinfer_docker/ancestryinfer/ancestry-probs-par1_allchrs.tsv /mixnmatch_ancestryinfer_docker/ancestryinfer/ancestry-probs-par2_allchrs.tsv simulated_hybrids_reads_gen50_prop_par1_0.5 0.9 /mixnmatch_ancestryinfer_docker/mixnmatch
-cp results_summary_simulated_hybrids* /workdir/Unphased-LAI/AHMM
-cp accuracy_indiv*_transposed /workdir/Unphased-LAI/AHMM
 ```
 
 ## Perform ELAI on simulated admixed genomes 
@@ -87,7 +78,7 @@ cd /workdir/$NETID/Unphased-LAI
 docker1 claim
 
 ### convert simulated phased haploypes into unphased diploid genotypes
-mkdir ELAI/02_fa ELAI/02_fa
+mkdir ELAI/02_fa
 cd ELAI/01_scripts
 bash generate_simulated_genotypes.sh
 
@@ -103,8 +94,8 @@ mv ELAI/elai-lin elai-lin
 bash 01_scripts/01_run_elai.sh &> 01_run_elai.log &
 # result files will be in the "output" folder
 
-mkdir sum
 ### summary across replicates
+mkdir sum
 cd 01_scripts
 R 02_sum_across_replicates.R &> 02_sum_across_replicates.log &
 
@@ -115,9 +106,9 @@ R 03_sum_per_pop.R &> 03_sum_per_pop.log &
 # Evaluation & Comparison
 You can run R on the Cornell biohpc server. Check out https://biohpc.cornell.edu/lab/userguide.aspx?a=software&i=266 on how to use Rstudio Server (without docker) on a Cornell biohpc server. Briefly, run the command "/programs/rstudio_server/rstudio_start" to start RStudio server. From a browser on your laptop/desktop computer, go to this site "http://cbsuxxxxxx.biohpc.cornell.edu:8015". (replacing the "cbsuxxxxx" with the acutal machine name). Log in with your BioHPC username and password.
 
-Another way, what I did is downloading the sum files to my local machine (I used FileZilla) into a directory `results_summary_plots/data`, running Rstudio using the R scripts in the folder `results_summary_plots`, and producing plots in `results_summary_plots/plots`. 
+Another way, what I did is downloading the files to be analyzed to my local machine (I used FileZilla) into a directory `results_summary_plots/data`, running Rstudio using the R scripts in the folder `results_summary_plots`, and producing plots in `results_summary_plots/plots`. 
 
-In this repo, the folder `results_summary_plots/data` hosts the example outputs from my final project report under basic simulation configuration. 
+In this repo, the folder `results_summary_plots/data` hosts the example outputs from my project report under basic simulation configuration. 
 
 - True
   - "*.bed": true ancestry bed files for individuals 1-50

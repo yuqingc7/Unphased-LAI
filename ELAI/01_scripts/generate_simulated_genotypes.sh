@@ -46,4 +46,3 @@ mv samples_id_201 samples_id_par2_n25.txt
 bash subsample_vcf.sh combined_100_annotated samples_id_admixed_n50.txt admixed
 bash subsample_vcf.sh combined_100_annotated samples_id_par1_n25.txt par1
 bash subsample_vcf.sh combined_100_annotated samples_id_par2_n25.txt par2
-

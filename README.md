@@ -3,7 +3,7 @@
 This github repo has codes for simulation and analyses in BTRY 6840 final project "Local ancestry inference (LAI) for unphased diploid data: starting from genotypes or mapped sequence reads?" by Yuqing Chen (yc2644@cornell.edu). Results presented in the final report can be found in `results_summary_plots`. 
 
 ## Note:
-1. All the analyses were run on a Cornell biohpc server (Rocky 9.0). R codes are run under R version 4.2.1 (2022-06-23) on the platform x86_64-pc-linux-gnu using Rstudio Server on the Cornell biohpc server. 
+1. All the analyses were run on a Cornell biohpc server (Rocky 9.0). R codes are run under R version 4.2.1 (2022-06-23) on the platform x86_64-pc-linux-gnu using Rstudio Server on the Cornell biohpc server. R codes for plotting are run under R version 4.2.2 (2022-10-31) on aarch64-apple-darwin20. 
 2. On Cornell biohpc server, `docker1` was used instead of `docker`. Your `/workdir/netID` will also be automatically mounted as `/workdir`. If you are working on your own computer, you will need to mount your local directory and use that to replace `/workdir`. 
 3. mixnmatch and ancestryinfer need to be run inside the docker container in the interactive mode.  
 4. snakemake can be a better choice to streamline the process than what I have here. 
@@ -122,8 +122,9 @@ In this repo, the folder `results_summary_plots/data` hosts the plots and sresul
 - True
   - "*.bed": true ancestry bed files for individuals 1-50
 - ELAI
-  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_all.txt" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_all.txt" (ELAI): ancestry dosage for every individual (n=50)
-  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_per_pop" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_per_pop" (ELAI): ancestry dosage for ancestry 1 & 2 averaged across 50 individuals in admixed population
+  - "samples_id_admixed_n50.txt": admixed individuals list (ELAI doesn't output admixed individuals names together with the dosage, need to use this name list to re-label the dosage with corresponding indiviuals; from `Unphased-LAI/ELAI/03_vcf/`)
+  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_all.txt" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_all.txt": ancestry dosage for every individual (n=50)
+  - "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds1_per_pop" & "par1_par2_admixed.numgen50_Mean_Replicates.ans_ds2_per_pop" : ancestry dosage for ancestry 1 & 2 averaged across 50 individuals in admixed population
     - for *ans_ds1, 2: homozygous ancestry 1; 1: heterozygous; 0: homozygous ancestry 2
     - for *ans_ds2, 2: homozygous ancestry 2; 1: heterozygous; 0: homozygous ancestry 1
 - AHMM

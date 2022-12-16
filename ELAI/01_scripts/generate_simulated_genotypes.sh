@@ -3,6 +3,9 @@
 # this script generates unphased diploid genotypes from mixnmatch output
 # usage: bash generate_simulated_genotypes.sh 
 
+## start date
+start=`date +%s`
+
 NETID=yc2644 # update this to your netid
 WORKDIR=/workdir/$NETID/Unphased-LAI
 
@@ -46,3 +49,11 @@ mv samples_id_201 samples_id_par2_n25.txt
 bash subsample_vcf.sh combined_100_annotated samples_id_admixed_n50.txt admixed
 bash subsample_vcf.sh combined_100_annotated samples_id_par1_n25.txt par1
 bash subsample_vcf.sh combined_100_annotated samples_id_par2_n25.txt par2
+
+# end date
+end=`date +%s`
+runtime=$((end-start))
+hours=$((runtime / 3600))
+minutes=$(( (runtime % 3600) / 60 ))
+seconds=$(( (runtime % 3600) % 60 ))
+echo "generate_simulated_genotypes.sh Runtime: $hours:$minutes:$seconds (hh:mm:ss)"

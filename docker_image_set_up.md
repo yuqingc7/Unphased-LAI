@@ -43,7 +43,7 @@ docker1 commit $CID unphased_lai # saved as biohpc_$NETID/unphased_lai
 
 ### save your image to a tar file
 NETID=yc2644 # update this to your netid
-docker1 save -o biohpc_$NETID/unphased_lai nphased_lai.tar.gz
+docker1 save -o unphased_lai.tar biohpc_yc2644/unphased_lai
 # or docker1 save biohpc_$NETID/unphased_lai | gzip > unphased_lai.tar.gz
 
 ### download the tar file to local machine
@@ -53,5 +53,5 @@ docker load -i unphased_lai.tar
 docker tag biohpc_yc2644/unphased_lai yuqingchen/unphased-lai
 ## push the image to docker hub
 docker push yuqingchen/unphased-lai
-# latest: digest: sha256:0ca6b17e6f3c9d304108bda99b1a71925409c3aab3607857f13d97d787979f77 size: 6419
+# latest: digest: sha256:284cb2887fdf62ffbe2fc5ea3d414fd7c20fe5433499a6918cfb10576a648748 size: 6419
 ```

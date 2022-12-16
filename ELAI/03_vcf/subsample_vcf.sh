@@ -8,8 +8,7 @@ PREFIX=$1
 SAMPLE=$2
 POP=$3
 
-
-if [[ ! -f $PREFIX.vcf.gz ]]; then
+if [[ ! -f "${PREFIX}".vcf.gz ]]; then
     /programs/htslib-1.16/bin/bgzip $PREFIX.vcf
     /programs/htslib-1.16/bin/tabix -f -p vcf $PREFIX.vcf.gz
 fi

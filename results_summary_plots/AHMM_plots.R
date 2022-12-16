@@ -29,7 +29,7 @@ ggplot(ans1_probs_mean, aes(x = bp, y = mean_prob, group = 1)) +
   theme(plot.title = element_text(size = 10)) +
   theme(axis.title = element_text(size = 8))
 
-ggsave("plots/Population averge posterior probability of ancestry 2_AHMM.png", width = 10, height = 9, units = "cm")
+ggsave("plots/Population averge posterior probability of ancestry 1_AHMM.png", width = 10, height = 9, units = "cm")
 
 
 ans2_probs <- read_tsv("data/AHMM/ancestry-probs-par2_transposed_allchrs.tsv")
@@ -51,7 +51,7 @@ ggplot(ans2_probs_mean, aes(x = bp, y = mean_prob, group = 1)) +
   theme(plot.title = element_text(size = 10)) +
   theme(axis.title = element_text(size = 8))
 
-ggsave("plots/Population averge posterior probability of ancestry 1_AHMM.png", width = 10, height = 9, units = "cm")
+ggsave("plots/Population averge posterior probability of ancestry 2_AHMM.png", width = 10, height = 9, units = "cm")
 
 
 # posterior probability, for each individual -----------------------------

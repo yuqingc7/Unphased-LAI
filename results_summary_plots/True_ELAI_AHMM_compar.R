@@ -22,7 +22,7 @@ indiv_list <- read_tsv("data/ELAI/samples_id_admixed_n50.txt", col_names = F) %>
 ELAI_unnumbered <- read_tsv(filename) %>% 
   pivot_longer(2:51, names_to = 'ind', values_to = 'dosage')
 
-ELAI <- left_join(snpinfo_ancestry_ds1_all_unnumbered, indiv_list, by = "ind") %>% 
+ELAI <- left_join(ELAI_unnumbered, indiv_list, by = "ind") %>% 
   select(-ind) %>% 
   rename(ind=X1) %>% 
   mutate(ind = gsub("\\indiv", "", ind)) %>% 
@@ -106,11 +106,11 @@ for (i in c(1:50)){
     scale_linetype_manual(values=c("solid", "dashed","dashed"), name = "")
 }
 
-figure <- ggarrange(plotlist=plot_list, nrow=5, ncol= 10, common.legend = TRUE, legend = "bottom")
+figure <- ggarrange(plotlist=plot_list, nrow=8, ncol= 7, common.legend = TRUE, legend = "bottom")
 annotate_figure(figure, 
                 top = textGrob("ELAI vs Ancestry_HMM, basic configuration", gp = gpar(cex = 1.6)),
                 left = textGrob("Per Indivdual ancestry 2 dosage", rot = 90, vjust = 1, gp = gpar(cex = 1.3)),
                 bottom = textGrob("Position along chromosome (Mb)", gp = gpar(cex = 1.3)))
 
-ggsave("plots/Per indivdual ancestry 2 dosage.png", width = 60, height = 30, units = "cm")
+ggsave("plots/Per indivdual ancestry 2 dosage.png", width = 40, height = 50, units = "cm")
 

@@ -19,7 +19,7 @@ ls Unphased-LAI # check if all files are there
 
 ### load the image from docker hub
 docker1 pull yuqingchen/unphased-lai:latest
-#Digest: sha256:0ca6b17e6f3c9d304108bda99b1a71925409c3aab3607857f13d97d787979f77
+#Digest: sha256:284cb2887fdf62ffbe2fc5ea3d414fd7c20fe5433499a6918cfb10576a648748
 #Status: Downloaded newer image for yuqingchen/unphased-lai:latest
 #docker.io/yuqingchen/unphased-lai:latest
 
@@ -50,14 +50,15 @@ docker1 exec -it $CID bash
 cd /mixnmatch_ancestryinfer_docker/mixnmatch
 
 ## bash_command_for_mixnmatch.sh usage: bash bash_command_for_mixnmatch.sh configuration_file.cfg working_directory (local)
-bash bash_command_for_mixnmatch.sh hybrid_simulation_configuration.cfg /workdir/Unphased-LAI/mixnmatch_simulation
+bash bash_command_for_mixnmatch.sh hybrid_simulation_configuration_file.cfg /workdir/Unphased-LAI/mixnmatch_simulation
+# Runtime: 0:43:35 (hh:mm:ss)
 
 ## if prompted with "gzip: simulated_hybrids_reads_gen50_prop_par1_0.5/indiv1_read*.fq.gz already exists; do you wish to overwrite (y or n)?" - (this should not appear after I fixed the mixnmatch perl script)
 ## all enter "y" 
 ```
 
 # Local Ancestry Inference
-## Perform Ancestry_HMM on simulated admixed genomes (need to be run inside the docker interactively)
+## Ancestry_HMM (need to be run inside the docker interactively)
 ```
 ### inside the same container where you used mixnmatch simulation
 cd /mixnmatch_ancestryinfer_docker/ancestryinfer
@@ -66,10 +67,11 @@ cd /mixnmatch_ancestryinfer_docker/ancestryinfer
 mkdir /workdir/Unphased-LAI/AHMM/output
 ## bash_command_for_ahmm.sh usage: bash bash_command_for_ahmm.sh configuration_file.cfg working_directory (local)
 bash bash_command_for_ahmm.sh ahmm_configuration_file.cfg /workdir/Unphased-LAI/AHMM
-# warning message can be ignored
+# can igore warning message
+# Runtime: 0:39:34 (hh:mm:ss)
 ```
 
-## Perform ELAI on simulated admixed genomes 
+## ELAI 
 ```
 ### In your working directory (outside the container)
 exit # if you are in the container, type exit
@@ -78,9 +80,9 @@ cd /workdir/$NETID/Unphased-LAI
 docker1 claim
 
 ### convert simulated phased haploypes into unphased diploid genotypes
-mkdir ELAI/02_fa
 cd ELAI/01_scripts
 bash generate_simulated_genotypes.sh
+# Runtime: 0:2:17 (hh:mm:ss)
 
 ### prepare input bimbam files for ELAI
 cd ../04_bimbam
@@ -91,16 +93,21 @@ bash vcf2bimbam.sh
 cd ..
 git clone https://github.com/haplotype/ELAI.git
 mv ELAI/elai-lin elai-lin
+chmod a+x elai-lin
 bash 01_scripts/01_run_elai.sh &> 01_run_elai.log &
+jobs # to check the running status
 # result files will be in the "output" folder
+# Runtime: 14:47:50 (hh:mm:ss)
+# can use slurm job scheduler to multithread on cornell biohpc server
 
 ### summary across replicates
 mkdir sum
-cd 01_scripts
-R 02_sum_across_replicates.R &> 02_sum_across_replicates.log &
+# open Rstudio and go to Unphased/ELAI/01_scripts
+# run 02_sum_across_replicates.R
 
 ### summary across individuals
-R 03_sum_per_pop.R &> 03_sum_per_pop.log &
+# open Rstudio and go to Unphased/ELAI/01_scripts
+# run 03_sum_per_pop.R
 ```
 
 # Evaluation & Comparison
